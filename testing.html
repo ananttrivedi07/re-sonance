@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re-sonance | Empowering lives touched by dementia</title>
+    <style>
+        :root {
+            --primary: #F47B3F;
+            --primary-light: #FCB499;
+            --secondary: #F7F7F7;
+            --text: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            transition: font-size 0.3s ease;
+        }
+        
+        header.scrolled .logo h1 {
+            font-size: 2rem;
+        }
+        
+        .tagline {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 5px;
+            transition: opacity 0.3s ease;
+        }
+        
+        header.scrolled .tagline {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary);
+            color: white;
+            padding: 120px 0 100px;
+            text-align: center;
+            border-radius: 0 0 50% 50% / 0 0 100px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero::before {
+            top: -50px;
+            left: -50px;
+        }
+        
+        .hero::after {
+            bottom: -50px;
+            right: -50px;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.7s;
+        }
+        
+        /* Common Section Styles */
+        section {
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 60px;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        /* Problem Section */
+        .problem {
+            padding: 100px 0;
+        }
+        
+        .problem-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .problem-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .problem-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+        
+        .problem-text ul {
+            list-style-position: inside;
+            margin-bottom: 30px;
+        }
+        
+        .problem-text ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .problem-text ul li:hover {
+            transform: translateX(5px);
+        }
+        
+        .problem-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .problem-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .problem-image img:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Solution Section */
+        .solution {
+            padding: 100px 0;
+            background-color: var(--secondary);
+            border-radius: 100px 100px 0 0;
+        }
+        
+        .solution-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .solution-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .solution-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .solution-image img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .solution-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .solution-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .solution-text p {
+            margin-bottom: 25px;
+        }
+        
+        .solution-text ul {
+            list-style-position: inside;
+            margin-bottom: 30px;
+        }
+        
+        .solution-text ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .solution-text ul li:hover {
+            transform: translateX(5px);
+        }
+        
+        /* Technology Section */
+        .technology {
+            padding: 100px 0;
+        }
+        
+        /* Roadmap Section */
+        .roadmap {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 10% 20%, rgba(244, 123, 63, 0.05) 0%, transparent 60%);
+        }
+        
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 70px;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            z-index: 1;
+        }
+        
+        .timeline-item {
+            text-align: center;
+            position: relative;
+            width: 33.333%;
+            z-index: 2;
+            transition: transform 0.5s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 5px rgba(244, 123, 63, 0.3);
+        }
+        
+        .timeline-item:hover .timeline-dot {
+            background-color: #e36a2e;
+            box-shadow: 0 0 0 8px rgba(244, 123, 63, 0.4);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .timeline-content {
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+        
+        /* Team Section */
+        .team {
+            padding: 100px 0;
+            background-color: var(--secondary);
+            position: relative;
+        }
+        
+        .team p.text-center {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-size: 1.2rem;
+        }
+        
+        .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .team-member {
+            width: 250px;
+            text-align: center;
+            background-color: white;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+        
+        .team-member h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        
+        .team-member p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: white;
+            position: relative;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background-image: radial-gradient(circle, rgba(244, 123, 63, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .contact-form:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(244, 123, 63, 0.2);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #e36a2e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(244, 123, 63, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .form-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        footer p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from { 
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from { 
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Intersection Observer Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in-left.appear {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in-right.appear {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            section {
+                padding: 70px 0;
+            }
+            
+            .hero {
+                padding: 100px 0 80px;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 40px;
+            }
+            
+            .timeline {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .timeline::before {
+                display: none;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                margin-bottom: 50px;
+            }
+            
+            .problem-container,
+            .solution-container {
+                flex-direction: column;
+            }
+            
+            .problem-text h3,
+            .solution-text h3 {
+                font-size: 1.5rem;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .contact-form {
+                padding: 30px 20px;
+            }
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: #e36a2e;
+            transform: translateY(-5px);
+        }
+        
+        /* Arrow symbol for back to top */
+        .back-to-top span {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Re-sonance</h1>
+            </div>
+            <div class="tagline">Empowering lives touched by dementia</div>
+            <nav>
+                <ul>
+                    <li><a href="#problem">Problem</a></li>
+                    <li><a href="#solution">Solution</a></li>
+                    <li><a href="#technology">Technology</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Reconnecting Memories, Rebuilding Lives</h2>
+            <p>Re-sonance is dedicated to enhancing the quality of life for those affected by dementia through innovative, AI-powered solutions that foster connection and support.</p>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem" id="problem">
+        <div class="container">
+            <h2 class="section-title fade-in">The Problem We're Solving</h2>
+            <div class="problem-container">
+                <div class="problem-text fade-in-left">
+                    <h3>Early-mid stage dementia patients</h3>
+                    <ul>
+                        <li>Feeling disconnected from family and events</li>
+                        <li>Struggling with declining memory</li>
+                        <li>Finding it difficult to utilize technology</li>
+                        <li>Limited access to personalized support</li>
+                    </ul>
+                    <h3>Informal caregivers</h3>
+                    <ul>
+                        <li>Emotional burden and stress</li>
+                        <li>Time constraints for proper care</li>
+                        <li>Lack of specialized knowledge and training</li>
+                        <li>Difficulty maintaining meaningful connections</li>
+                    </ul>
+                </div>
+                <div class="problem-image fade-in-right">
+                    <img src="images/problem.png" alt="Elderly person looking confused at smartphone">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution" id="solution">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Solution</h2>
+            <div class="solution-container">
+                <div class="solution-image fade-in-left">
+                    <img src="images/with-technology.png" alt="Elderly person smiling while using telephone">
+                </div>
+                <div class="solution-text fade-in-right">
+                    <h3>AI-Powered Connection Platform</h3>
+                    <p>A smart solution that uses AI technology to create accessible interfaces that help reconnect patients with their memories and loved ones through familiar interactions.</p>
+                    
+                    <h3>For early-mid stage dementia patients</h3>
+                    <ul>
+                        <li>Familiar and intuitive interfaces</li>
+                        <li>Memory enhancement tools</li>
+                        <li>Simplified communication channels</li>
+                        <li>Engaging yet calming content</li>
+                    </ul>
+                    
+                    <h3>For informal caregivers</h3>
+                    <ul>
+                        <li>Reduced care burden</li>
+                        <li>Real-time monitoring capabilities</li>
+                        <li>Training and support resources</li>
+                        <li>Facilitated meaningful interactions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="technology" id="technology">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Technology</h2>
+            <div class="problem-container">
+                <div class="problem-text fade-in-left">
+                    <h3>AI-driven personalization</h3>
+                    <p>Our platform adapts to each user's specific needs, preferences, and cognitive capabilities, providing a truly personalized experience.</p>
+                    
+                    <h3>Familiar interfaces</h3>
+                    <p>We utilize designs that resonate with the familiar experiences of dementia patients, reducing cognitive load and increasing comfort.</p>
+                    
+                    <h3>Adaptive digital interfaces</h3>
+                    <p>Our interfaces respond to user behavior and adjust accordingly to maintain engagement while preventing frustration.</p>
+                    
+                    <h3>Regular care and connection</h3>
+                    <p>The platform facilitates consistent communication and care routines that are vital for dementia management.</p>
+                </div>
+                <div class="problem-image fade-in-right">
+                    <img src="images/asset.png" alt="Technology interface example">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap" id="roadmap">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Roadmap</h2>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Mar – Jun 2025</div>
+                    <div class="timeline-content">Research and Development</div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Jul – Dec 2025</div>
+                    <div class="timeline-content">Minimum Viable Product (MVP)</div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Jan – Jun 2026</div>
+                    <div class="timeline-content">Go-To-Market Strategy & Launch</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Team</h2>
+            <p class="text-center fade-in">We are a team with strong psychology, human-centered design, product & AI expertise.</p>
+            <div class="team-container">
+                <div class="team-member fade-in">
+                    <img src="images/Anant.png" alt="Anant Trivedi">
+                    <h3>Anant Trivedi</h3>
+                    <p>AI assistance and LLMs</p>
+                </div>
+                <div class="team-member fade-in">
+                    <img src="images/Sanne.png" alt="Sanne Douve">
+                    <h3>Sanne Douve</h3>
+                    <p>User experience and human-centered design</p>
+                </div>
+                <div class="team-member fade-in">
+                    <img src="images/Sarthak.png" alt="Sarthak Goswami">
+                    <h3>Sarthak Goswami</h3>
+                    <p>AI routines and Market Data</p>
+                </div>
+                <div class="team-member fade-in">
+                    <img src="images/Simona.jpg" alt="Simona Skodova">
+                    <h3>Simona Skodova</h3>
+                    <p>Psychology background</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Get In Touch</h2>
+            <div class="contact-form fade-in">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <p class="form-note">All inquiries will be sent to re.sonance.tue@gmail.com</p>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Re-sonance</div>
+            <p>Empowering lives touched by dementia</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <span>↑</span>
+    </a>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Header shrink on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                header.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+        // Back to top button functionality
+        document.getElementById('backToTop').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        // Intersection Observer for fade-in animations
+        const fadeInElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        fadeInElements.forEach(element => {
+            observer.observe(element);
+        });
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Prepare email link with mailto protocol
+            const mailtoLink = `mailto:re.sonance.tue@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show confirmation and reset form
+            setTimeout(() => {
+                alert(`Thank you for your message, ${name}! Your email client should have opened with a pre-filled message to our team.`);
+                this.reset();
+            }, 100);
+        }); 
+    </script>
+</body>
+</html>
