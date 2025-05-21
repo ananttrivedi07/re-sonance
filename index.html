@@ -1004,25 +1004,72 @@
             observer.observe(element);
         });
         // Contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            // Prepare email link with mailto protocol
+        // Contact form submission - mobile-friendly approach
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
+    
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    
+    // Mobile detection
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // For mobile: Give users a choice
+        const confirmSend = confirm("Would you like to send this message via your email app? Click OK to open your email app or Cancel to copy the message to your clipboard.");
+        
+        if (confirmSend) {
+            // Option 1: Open email client with mailto
             const mailtoLink = `mailto:re.sonance.tue@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
-            
-            // Open email client
             window.location.href = mailtoLink;
+        } else {
+            // Option 2: Copy to clipboard for manual sending
+            const textToCopy = `To: re.sonance.tue@gmail.com\nSubject: ${subject}\n\nName: ${name}\nEmail: ${email}\n\n${message}`;
             
-            // Show confirmation and reset form
-            setTimeout(() => {
-                alert(`Thank you for your message, ${name}! Your email client should have opened with a pre-filled message to our team.`);
-                this.reset();
-            }, 100);
-        }); 
+            // Use navigator clipboard API if available
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        alert("Message copied to clipboard! You can now paste it into your email app.");
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy text: ', err);
+                        alert("Couldn't copy to clipboard. Please copy the message manually.");
+                    });
+            } else {
+                // Fallback for browsers without clipboard API
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                textarea.style.position = 'fixed';  // Prevent scrolling to bottom
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    alert("Message copied to clipboard! You can now paste it into your email app.");
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                    alert("Couldn't copy to clipboard. Please copy the message manually.");
+                }
+                
+                document.body.removeChild(textarea);
+            }
+        }
+    } else {
+        // For desktop: Use mailto as before
+        const mailtoLink = `mailto:re.sonance.tue@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
+        window.location.href = mailtoLink;
+    }
+    
+    // Reset form after a short delay
+    setTimeout(() => {
+        this.reset();
+    }, 1000);
+});
     </script>
 </body>
 </html>
