@@ -6,14 +6,24 @@ import numpy as np
 import scipy.io.wavfile as wav
 from pydub import AudioSegment
 import os
-from gtts import gTTS # For Text-to-Speech
+from gtts import gTTS
 import time
+import webrtcvad
 
 # --- Configuration and Model Loading ---
 device = "cuda" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
 model_id = "openai/whisper-large-v3-turbo"
+
+# VAD parameters
+VAD_SAMPLE_RATE = 16000 # Must be 8000, 16000, 32000, or 48000
+VAD_FRAME_DURATION_MS = 30 # Must be 10, 20, or 30 ms
+VAD_PADDING_MS = 300 # Add padding to detected speech segments
+VAD_AGGRESSIVENESS = 3 # 0 (least aggressive) to 3 (most aggressive)
+
+# Calculate frame size in samples
+VAD_FRAME_SIZE = int(VAD_SAMPLE_RATE * VAD_FRAME_DURATION_MS / 1000)
 
 print(f"Loading Whisper model '{model_id}' to {device}...")
 try:
@@ -37,27 +47,91 @@ except Exception as e:
     print("Please ensure you have the necessary Hugging Face models downloaded and sufficient GPU memory if using CUDA.")
     exit() # Exit if models can't be loaded
 
-# --- Audio Recording Functions ---
-def record_audio_segment(filename, duration=5, samplerate=16000):
-    """Records a segment of audio and saves it to a file."""
-    print(f"Recording for {duration} seconds... Please speak now.")
-    temp_wav = "temp_recording_segment.wav" # Use a unique temp file name
+
+# Initialize VAD
+vad = webrtcvad.Vad(VAD_AGGRESSIVENESS)
+
+# --- Audio Recording and VAD Functions ---
+def record_and_detect_speech(filename, samplerate=VAD_SAMPLE_RATE):
+    """
+    Listens continuously, detects speech using VAD, and saves the detected speech
+    segment to a file.
+    """
+    print("\nListening for speech... (Say 'exit' or 'goodbye' to end)")
+    audio_buffer = []
+    in_speech_segment = False
+    speech_start_time = None
+    
+    # For padding at the end of speech
+    ring_buffer = []
+    ring_buffer_size = int(VAD_PADDING_MS / VAD_FRAME_DURATION_MS)
+
+    # Open an audio input stream
+    with sd.InputStream(samplerate=samplerate, channels=1, dtype='int16') as stream:
+        while True:
+            # Read a frame of audio
+            frame, overflowed = stream.read(VAD_FRAME_SIZE)
+            if overflowed:
+                print("Audio input buffer overflowed!")
+
+            # Flatten frame and convert to bytes for VAD
+            frame_flattened = frame.flatten()
+            frame_bytes = frame_flattened.tobytes()
+
+            # Check if it's a speech frame
+            is_speech = vad.is_speech(frame_bytes, samplerate)
+
+            if not in_speech_segment:
+                # Not currently in a speech segment, looking for start
+                if is_speech:
+                    print("Speech detected! Recording...")
+                    in_speech_segment = True
+                    speech_start_time = time.time()
+                    # Add flattened data from ring buffer
+                    for buf in ring_buffer:
+                        audio_buffer.extend(buf)
+                    audio_buffer.extend(frame_flattened)
+                    ring_buffer = []
+                else:
+                    # Keep non-speech frames in ring buffer for potential pre-padding
+                    ring_buffer.append(frame_flattened)
+                    if len(ring_buffer) > ring_buffer_size:
+                        ring_buffer.pop(0)
+            else:
+                # Currently in a speech segment
+                audio_buffer.extend(frame_flattened)
+                if not is_speech:
+                    # Speech ended, start padding counter
+                    ring_buffer.append(frame_flattened)
+                    if len(ring_buffer) >= ring_buffer_size:
+                        # Enough non-speech frames for padding, segment ended
+                        print("Speech ended. Processing...")
+                        break
+                else:
+                    # Speech continues, clear ring buffer
+                    ring_buffer = []
+
+    if not audio_buffer:
+        print("No speech detected in this turn.")
+        return False
 
     try:
-        audio = sd.rec(int(duration * samplerate), samplerate=samplerate, channels=1, dtype='int16')
-        sd.wait() # Wait for the recording to finish
-
-        wav.write(temp_wav, samplerate, audio) # Save as WAV first
+        # Convert buffered audio to numpy array
+        audio_data = np.array(audio_buffer, dtype=np.int16)
+        
+        # Save temporary WAV file
+        temp_wav = "temp_speech_segment.wav"
+        wav.write(temp_wav, samplerate, audio_data)
         audio_segment = AudioSegment.from_wav(temp_wav)
-        audio_segment.export(filename, format="mp3") # Convert to MP3
-        print(f"Audio segment saved to {filename}")
+        audio_segment.export(filename, format="mp3")
+        print(f"Speech segment saved to {filename}")
         return True
     except Exception as e:
-        print(f"Error during audio recording: {e}")
+        print(f"Error saving audio segment: {e}")
         return False
     finally:
         if os.path.exists(temp_wav):
-            os.remove(temp_wav) # Clean up temporary WAV file
+            os.remove(temp_wav)
 
 def transcribe_audio(file_path):
     """Transcribes an audio file using the loaded Whisper pipeline."""
@@ -97,23 +171,24 @@ def speak(text, lang='en'):
         print("Please ensure you have an active internet connection for gTTS.")
 
 # --- Voice Chat with History ---
-def voice_chat_with_history(ollama_model="llama3.2", record_duration=5):
+def voice_chat_with_history(ollama_model="llama3.2"):
     """
     Initiates a voice chat session with the Ollama model, maintaining conversation history.
+    Uses VAD for continuous listening.
     """
     messages = [] # This list will store the chat history
 
-    print("\n--- Welcome to Voice Chat with Ollama! ---")
+    print("\n--- Welcome to Continuous Voice Chat with Ollama! ---")
     print(f"Using Ollama model: {ollama_model}")
-    print("Each turn, you'll speak for approximately {} seconds.".format(record_duration))
+    print("Speak when you are ready. The system will detect your speech.")
     print("Say 'exit' or 'goodbye' to end the conversation.")
     print("------------------------------------------")
 
     while True:
-        user_audio_file = "user_input_audio.mp3"
-        # Record user's audio
-        if not record_audio_segment(user_audio_file, duration=record_duration):
-            continue # Skip this turn if recording failed
+        user_audio_file = "user_input_vad_audio.mp3"
+        # Record user's audio using VAD
+        if not record_and_detect_speech(user_audio_file):
+            continue # If no speech was detected, continue listening
 
         # Transcribe user's audio
         user_text = transcribe_audio(user_audio_file)
@@ -160,4 +235,4 @@ def voice_chat_with_history(ollama_model="llama3.2", record_duration=5):
 # --- Main Execution ---
 if __name__ == "__main__":
     # Example usage:
-    voice_chat_with_history(ollama_model="llama3.2", record_duration=5)
+    voice_chat_with_history(ollama_model="llama3.2")
