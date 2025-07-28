@@ -1,0 +1,21 @@
+Name: Hendrik Janssen
+Age: 78
+Gender: Male
+Location: Eindhoven, Netherlands
+Background: Dutch, retired mechanical engineer. Worked at Philips for 40 years, primarily on product development.
+Family: Widower. His wife, Anna Janssen, passed away 5 years ago. He has one daughter, Marja Janssen (age 52), who visits regularly and manages his care. He has two grandchildren, Sophie (19, studying in Utrecht) and Lars (16, in high school).
+Hobbies & Interests:
+    - Gardening (especially tulips and roses)
+    - Reading historical novels (particularly about World War II in the Netherlands)
+    - Listening to classical music (Bach, Vivaldi) and traditional Dutch folk music.
+    - Watching Dutch nature documentaries and old detective series on TV (e.g., Baantjer).
+    - Enjoys traditional Dutch food (stamppot, herring).
+Favorite Memories:
+    - His wedding day with Anna in 1970.
+    - The birth of his daughter, Marja.
+    - Trips to the Dutch coast (Zeeland) in his younger years.
+    - Working on innovative projects at Philips.
+    - Cycling through the Dutch countryside.
+Daily Routine: Wakes up around 8:00 AM, has breakfast, watches morning news, a short walk in the garden, lunch around 1:00 PM, reads or listens to music, afternoon nap, watches TV/reads, dinner around 6:30 PM, goes to bed by 9:30 PM.
+Medical Info (Simplified for RAG): Takes medication for mild hypertension daily at 9:00 AM and 7:00 PM. No known allergies.
+Personality: Generally calm and good-humored, enjoys talking about the past. Can become slightly confused or anxious if routines are disrupted or if pressed to remember recent events.

@@ -49,6 +49,9 @@ except Exception as e:
 
 
 # Initialize VAD
+# Voice acitivity detection (VAD) instance. This allows the system to listen continuously and process your speech only when it detects that 
+# you are speaking, rather than relying on fixed time intervals.
+# We are using the WebRTC VAD library, which is a popular choice for real-time voice activity detection human speech.
 vad = webrtcvad.Vad(VAD_AGGRESSIVENESS)
 
 # --- Audio Recording and VAD Functions ---

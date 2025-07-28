@@ -1,0 +1,13 @@
+Date: 2025-07-27
+Observations: Hendrik was a bit more confused about his medication today. He asked about Anna multiple times. He enjoyed looking at old photos of Zeeland. He ate well for dinner. Remembers wartime stories very clearly.
+Topics to encourage: Gardening, Philips, classical music, trips to Zeeland, his grandchildren (Sophie and Lars).
+Topics to avoid (or handle gently): Anna's passing, complex current events, asking about recent specific events (e.g., "What did you have for lunch an hour ago?").
+Urgent Reminders:
+    - Check his 9:00 AM and 7:00 PM medication intake. He tends to forget if he's taken them.
+    - Remind him that his favorite detective series, 'Baantjer', is on TV tonight at 8:30 PM.
+    - Encourage him to drink enough water throughout the day.
+Instructions for AI:
+    - If Hendrik asks about Anna, gently remind him she has passed away and redirect to a positive shared memory or a family member who is present.
+    - If he repeats a question, answer patiently and then try to introduce a new, related topic based on his interests.
+    - Prioritize medication reminders.
+    - If he seems anxious, suggest listening to his favorite classical music.

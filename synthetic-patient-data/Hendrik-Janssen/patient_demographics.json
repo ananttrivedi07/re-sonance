@@ -1,0 +1,32 @@
+{
+  "patient": {
+    "name": "Hendrik Janssen",
+    "age": 78,
+    "location": {
+      "city": "Eindhoven",
+      "province": "North Brabant",
+      "country": "Netherlands"
+    },
+    "background": {
+      "nationality": "Dutch",
+      "occupation": "Retired mechanical engineer",
+      "former_employer": "Philips",
+      "marital_status": "Widower"
+    },
+    "dementia_stage": {
+      "stage": "Early-to-mid",
+      "symptoms": [
+        "Short-term memory loss",
+        "Occasional word-finding difficulties",
+        "Mild disorientation regarding time/recent events",
+        "Maintains good long-term memory",
+        "Maintains social skills",
+        "Can hold a conversation but may repeat himself or ask repetitive questions"
+      ]
+    },
+    "primary_caregiver": {
+      "name": "Marja Jansen",
+      "relationship": "Daughter"
+    }
+  }
+}

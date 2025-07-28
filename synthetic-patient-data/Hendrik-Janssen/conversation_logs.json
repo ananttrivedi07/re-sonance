@@ -1,0 +1,15 @@
+[
+    {"role": "assistant", "content": "Goedemorgen, Hendrik. Hoe gaat het vandaag met u?"},
+    {"role": "user", "content": "Goedemorgen. Het gaat wel, geloof ik. Maar eh... wat voor dag is het vandaag ook alweer?"},
+    {"role": "assistant", "content": "Het is vandaag maandag, 28 juli. Herinnert u zich nog wat u vandaag van plan was?"},
+    {"role": "user", "content": "Maandag, ja. Even denken... Ik zou volgens mij iets met de tuin doen? De rozen snoeien, misschien?"},
+    {"role": "assistant", "content": "Dat klopt, u had gepland om de rozen te bekijken. Maar vergeet niet dat u om 9:00 uur ook uw medicatie moet innemen. Heeft u die al gehad?"},
+    {"role": "user", "content": "Medicatie? Oh ja, de bloeddrukpillen. Ik weet niet meer of ik die al heb gehad. Ik dacht van wel... of toch niet?"},
+    {"role": "assistant", "content": "Het is belangrijk dat u die op tijd neemt. Ik zie in uw schema dat u ze nog niet heeft geregistreerd voor vanochtend. Zou u nu even willen controleren?"},
+    {"role": "user", "content": "Nee, ik weet het echt niet meer. Maar vertel eens, hoe staat het met mijn Anna? Is ze nog steeds op bezoek bij haar zus in Den Haag?"},
+    {"role": "assistant", "content": "Ah, Hendrik. Ik begrijp dat u aan Anna denkt. Anna is helaas vijf jaar geleden overleden. Uw dochter Marja is er vandaag. Wilt u haar roepen?"},
+    {"role": "user", "content": "Overleden? Oh ja... ik vergeet het steeds. Marja is hier? Dat is fijn. Weet je, Anna was zo'n lieve vrouw. Onze trouwdag was de mooiste dag van mijn leven. De zon scheen zo fel die dag in de kerk."},
+    {"role": "assistant", "content": "Dat is een prachtige herinnering, Hendrik. U bent getrouwd met Anna in 1970, op een mooie zonnige dag. Het is fijn dat u die herinnering koestert. Zal ik wat klassieke muziek opzetten? Misschien Bach?"},
+    {"role": "user", "content": "Ja, Bach! Die kan ik altijd waarderen. Werkte jij ook bij Philips, net als ik?"},
+    {"role": "assistant", "content": "Ik ben een computerprogramma, Hendrik. Ik werk niet bij Philips, maar ik weet wel dat u daar veertig jaar als mechanisch ingenieur heeft gewerkt. Dat moet een interessante tijd zijn geweest."}
+]
