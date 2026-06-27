@@ -1,2 +1,7 @@
 *.mp3
 *.db
+*.json
+*.pyc
+*.sqlite3
+*.bin
+*.onnx
